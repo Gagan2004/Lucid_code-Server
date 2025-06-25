@@ -281,21 +281,18 @@
 
 // Updated to use Groq API instead of Hugging Face
 import express from 'express';
-import dotenv from 'dotenv';
 import { Groq } from 'groq-sdk';
 import { ChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions';
 
-// dotenv.config();
-
+require('dotenv').config();
 const router = express.Router();
 
-const GROQ_API_KEY = "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";
-if (!GROQ_API_KEY) {
+if (!process.env.GROQ_API_KEY) {
   console.error("GROQ_API_KEY environment variable is not set.");
   process.exit(1);
 }
 
-const groq = new Groq({ apiKey: "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" });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const GROQ_MODEL = 'llama3-8b-8192';
 
 router.post('/ask-ai', async (req: express.Request, res: express.Response) => {
